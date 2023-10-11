@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IUserRepository extends MongoRepository<User, Long> {
+public interface IUserRepository extends MongoRepository<User, String> {
     @Query("{'userName': ?0 }")
     User findByUserName(String userName);
 
