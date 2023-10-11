@@ -1,5 +1,6 @@
 package com.terracustosapi.terracustos.Controllers;
 
+import com.terracustosapi.terracustos.Dtos.LoginResponse;
 import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Models.User;
 import com.terracustosapi.terracustos.Services.AuthService;
@@ -19,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody UserDto userDto) {
+    public LoginResponse login(@RequestBody UserDto userDto) {
         try {
             return authService.login(userDto);
         } catch (Exception e) {
