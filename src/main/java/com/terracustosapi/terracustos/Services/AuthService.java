@@ -25,7 +25,7 @@ public class AuthService implements IAuthService {
     public User register(UserDto userDto) {
 
         User authUser = User.builder()
-                .userName(userDto.getUserName())
+                .username(userDto.getUsername())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword()).build();
 
@@ -39,8 +39,8 @@ public class AuthService implements IAuthService {
         User user = null;
         if(checkCredential(userDto.getEmail())){
             user = userRepository.findByEmail(userDto.getEmail());
-        } else if(checkCredential(userDto.getUserName())){
-            user = userRepository.findByUserName(userDto.getUserName());
+        } else if(checkCredential(userDto.getUsername())){
+            user = userRepository.findByUserName(userDto.getUsername());
         }
         if (user == null){
             throw new Exception("Invalid username or email");
@@ -49,8 +49,12 @@ public class AuthService implements IAuthService {
             throw new Exception("Wrong password");
         }
         Session session = sessionService.generateSession(user);
+        UserDto sessionUser = UserDto.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
 
-        return new LoginResponse(user, session.getSessionId());
+        return new LoginResponse(sessionUser, session.getSessionId());
     }
     @Override
     public boolean isAuthorized(AuthorizationRequestDto request) throws Exception {
