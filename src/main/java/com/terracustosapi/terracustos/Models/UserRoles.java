@@ -17,6 +17,6 @@ import java.util.List;
 @Builder
 public class UserRoles {
     @Id
-    private String id;
+    private String userId;
     private List<Role> roles;
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorizationRequest {
+public class AuthorizationRequestDto {
     private String sessionToken;
     private List<Role> roles;
 }

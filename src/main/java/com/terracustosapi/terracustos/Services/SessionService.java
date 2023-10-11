@@ -13,12 +13,10 @@ public class SessionService implements ISessionService {
 
     @Autowired
     private ISessionRepository sessionRepository;
-    private String generateToken(){
-        return UUID.randomUUID().toString();
-    }
+
     @Override
-    public Session generateSession(User user){
-        Session session = new Session(generateToken(), user.getId());
+    public Session generateSession(User user) {
+        Session session = new Session(generateToken(), user.getUserId());
 
         sessionRepository.save(session);
 
@@ -26,7 +24,11 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public Session getSession(String id){
+    public Session getSession(String id) {
         return sessionRepository.findById(id).orElseThrow();
+    }
+
+    private String generateToken() {
+        return UUID.randomUUID().toString();
     }
 }

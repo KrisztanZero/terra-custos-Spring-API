@@ -1,6 +1,6 @@
 package com.terracustosapi.terracustos.Controllers;
 
-import com.terracustosapi.terracustos.Dtos.AuthorizationRequest;
+import com.terracustosapi.terracustos.Dtos.AuthorizationRequestDto;
 import com.terracustosapi.terracustos.Enums.Role;
 import com.terracustosapi.terracustos.Services.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class GreetingController {
     @GetMapping("/secret-message/{sessionId}")
     public String secretMessage(@PathVariable String sessionId){
         List<Role> allowedRoles = List.of(Role.STANDARD, Role.PREMIUM);
-        AuthorizationRequest request = new AuthorizationRequest(sessionId, allowedRoles);
+        AuthorizationRequestDto request = new AuthorizationRequestDto(sessionId, allowedRoles);
         try {
             if(authService.isAuthorized(request)){
                 return "You are Standard.";
@@ -36,7 +36,7 @@ public class GreetingController {
     @GetMapping("/premium-message/{sessionId}")
     public String premiumMessage(@PathVariable String sessionId){
         List<Role> allowedRoles = List.of(Role.PREMIUM);
-        AuthorizationRequest request = new AuthorizationRequest(sessionId, allowedRoles);
+        AuthorizationRequestDto request = new AuthorizationRequestDto(sessionId, allowedRoles);
         try {
             if(authService.isAuthorized(request)){
                 return "You are Premium.";

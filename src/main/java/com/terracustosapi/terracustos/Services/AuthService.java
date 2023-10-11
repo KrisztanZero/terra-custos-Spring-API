@@ -1,6 +1,6 @@
 package com.terracustosapi.terracustos.Services;
 
-import com.terracustosapi.terracustos.Dtos.AuthorizationRequest;
+import com.terracustosapi.terracustos.Dtos.AuthorizationRequestDto;
 import com.terracustosapi.terracustos.Dtos.LoginResponse;
 import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Enums.Role;
@@ -30,7 +30,7 @@ public class AuthService implements IAuthService {
                 .password(userDto.getPassword()).build();
 
         User appUser = userRepository.save(authUser);
-        roleService.addRoles(List.of(Role.STANDARD), appUser.getId());
+        roleService.addRoles(List.of(Role.STANDARD), appUser.getUserId());
         return appUser;
     }
 
@@ -53,7 +53,7 @@ public class AuthService implements IAuthService {
         return new LoginResponse(user, session.getSessionId());
     }
     @Override
-    public boolean isAuthorized(AuthorizationRequest request) throws Exception {
+    public boolean isAuthorized(AuthorizationRequestDto request) throws Exception {
         Session session = null;
         try{
             session = sessionService.getSession(request.getSessionToken());
@@ -64,7 +64,7 @@ public class AuthService implements IAuthService {
             throw new Exception("Invalid session");
         }
         User user = userRepository.findById(session.getUserId()).orElseThrow();
-        List<Role> userRoles = roleService.getUserRoles(user.getId()).getRoles();
+        List<Role> userRoles = roleService.getUserRoles(user.getUserId()).getRoles();
 
         return request.getRoles().stream().anyMatch(userRoles::contains);
     }
