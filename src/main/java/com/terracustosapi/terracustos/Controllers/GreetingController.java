@@ -24,8 +24,8 @@ public class GreetingController {
         return "Welcome";
     }
 
-    @GetMapping("/secret-message/{sessionId}")
-    public String secretMessage(@PathVariable String sessionId){
+    @GetMapping("/user-welcome/{sessionId}")
+    public String userWelcome(@PathVariable String sessionId){
         List<Role> allowedRoles = List.of(Role.STANDARD, Role.PREMIUM);
         AuthorizationRequestDto request = new AuthorizationRequestDto(sessionId, allowedRoles);
         try {
