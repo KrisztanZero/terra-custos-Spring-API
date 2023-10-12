@@ -17,9 +17,7 @@ public class SessionService implements ISessionService {
     @Override
     public Session generateSession(User user) {
         Session session = new Session(generateToken(), user.getUserId());
-
         sessionRepository.save(session);
-
         return session;
     }
 
