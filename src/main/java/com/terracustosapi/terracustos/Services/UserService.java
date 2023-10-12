@@ -3,6 +3,7 @@ package com.terracustosapi.terracustos.Services;
 import com.terracustosapi.terracustos.IRepositories.IUserRepository;
 import com.terracustosapi.terracustos.Models.Session;
 import com.terracustosapi.terracustos.Models.User;
+import com.terracustosapi.terracustos.Models.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Service
 public class UserService implements IUserService {
+    @Autowired
+    private IRoleService roleService;
     @Autowired
     private ISessionService sessionService;
     @Autowired
@@ -47,5 +50,11 @@ public class UserService implements IUserService {
     @Override
     public User save(User authUser) {
         return userRepository.save(authUser);
+    }
+
+    @Override
+    public UserRoles getUserRoles(String sessionId) {
+        Session session = sessionService.getSession(sessionId);
+        return roleService.getUserRoles(session.getUserId());
     }
 }

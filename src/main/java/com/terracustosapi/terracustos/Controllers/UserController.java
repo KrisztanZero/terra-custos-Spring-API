@@ -1,6 +1,7 @@
 package com.terracustosapi.terracustos.Controllers;
 
 import com.terracustosapi.terracustos.Dtos.UserDto;
+import com.terracustosapi.terracustos.Dtos.UserRolesDto;
 import com.terracustosapi.terracustos.Services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,5 +32,10 @@ public class UserController {
     @GetMapping("/getAll")
     public List<UserDto> getAll(){
         return userService.getALl().stream().map(UserDto::new).collect(Collectors.toList());
+    }
+
+    @GetMapping("/getUserRoles/{sessionId}")
+    public UserRolesDto getRoles(@PathVariable String sessionId){
+        return new UserRolesDto(userService.getUserRoles(sessionId));
     }
 }
