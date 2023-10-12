@@ -4,7 +4,6 @@ import com.terracustosapi.terracustos.Dtos.AuthorizationRequestDto;
 import com.terracustosapi.terracustos.Dtos.LoginResponse;
 import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Enums.Role;
-import com.terracustosapi.terracustos.IRepositories.IUserRepository;
 import com.terracustosapi.terracustos.Models.Session;
 import com.terracustosapi.terracustos.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.List;
 @Service
 public class AuthService implements IAuthService {
     @Autowired
-    private IUserRepository userRepository;
+    private IUserService userService;
     @Autowired
     private ISessionService sessionService;
     @Autowired
@@ -29,7 +28,7 @@ public class AuthService implements IAuthService {
                 .email(userDto.getEmail())
                 .password(userDto.getPassword()).build();
 
-        User appUser = userRepository.save(authUser);
+        User appUser = userService.save(authUser);
         roleService.addRoles(List.of(Role.STANDARD), appUser.getUserId());
         return appUser;
     }
@@ -37,43 +36,33 @@ public class AuthService implements IAuthService {
     @Override
     public LoginResponse login(UserDto userDto) throws Exception {
         User user = null;
-        if(checkCredential(userDto.getEmail())){
-            user = userRepository.findByEmail(userDto.getEmail());
-        } else if(checkCredential(userDto.getUsername())){
-            user = userRepository.findByUserName(userDto.getUsername());
+        if (checkCredential(userDto.getEmail())) {
+            user = userService.getUserByEmail(userDto.getEmail());
+        } else if (checkCredential(userDto.getUsername())) {
+            user = userService.getUserByName(userDto.getUsername());
         }
-        if (user == null){
+        if (user == null) {
             throw new Exception("Invalid username or email");
         }
         if (!user.getPassword().equals(userDto.getPassword())) {
             throw new Exception("Wrong password");
         }
         Session session = sessionService.generateSession(user);
-        UserDto sessionUser = UserDto.builder()
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .build();
 
-        return new LoginResponse(sessionUser, session.getSessionId());
+        return new LoginResponse(new UserDto((user)), session.getSessionId());
     }
+
     @Override
-    public boolean isAuthorized(AuthorizationRequestDto request) throws Exception {
-        Session session = null;
-        try{
-            session = sessionService.getSession(request.getSessionToken());
-        }catch(Exception e){
-            throw new Exception("Invalid session");
-        };
-        if(session == null) {
-            throw new Exception("Invalid session");
-        }
-        User user = userRepository.findById(session.getUserId()).orElseThrow();
+    public boolean isAuthorized(AuthorizationRequestDto request) {
+        Session session;
+        session = sessionService.getSession(request.getSessionToken());
+        User user = userService.getUserById(session.getUserId());
         List<Role> userRoles = roleService.getUserRoles(user.getUserId()).getRoles();
 
         return request.getRoles().stream().anyMatch(userRoles::contains);
     }
 
-    private boolean checkCredential(String credential){
+    private boolean checkCredential(String credential) {
         return (credential != null && !credential.isEmpty());
     }
 }
