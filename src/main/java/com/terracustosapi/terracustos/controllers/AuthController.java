@@ -1,9 +1,9 @@
-package com.terracustosapi.terracustos.Controllers;
+package com.terracustosapi.terracustos.controllers;
 
-import com.terracustosapi.terracustos.Dtos.LoginResponse;
-import com.terracustosapi.terracustos.Dtos.UserDto;
-import com.terracustosapi.terracustos.Models.User;
-import com.terracustosapi.terracustos.Services.AuthService;
+import com.terracustosapi.terracustos.dtos.LoginResponse;
+import com.terracustosapi.terracustos.dtos.UserDto;
+import com.terracustosapi.terracustos.models.User;
+import com.terracustosapi.terracustos.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private AuthService authService;

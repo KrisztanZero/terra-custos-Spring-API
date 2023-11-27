@@ -1,6 +1,6 @@
-package com.terracustosapi.terracustos.Dtos;
+package com.terracustosapi.terracustos.dtos;
 
-import com.terracustosapi.terracustos.Enums.Role;
+import com.terracustosapi.terracustos.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

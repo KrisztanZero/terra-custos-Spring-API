@@ -1,4 +1,4 @@
-package com.terracustosapi.terracustos.Models;
+package com.terracustosapi.terracustos.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("users")
+@Document("sessions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Session {
     @Id
+    private String sessionId;
     private String userId;
-    private String username;
-    private String email;
-    private String password;
 }

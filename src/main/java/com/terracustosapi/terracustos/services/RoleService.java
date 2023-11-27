@@ -1,8 +1,9 @@
-package com.terracustosapi.terracustos.Services;
+package com.terracustosapi.terracustos.services;
 
-import com.terracustosapi.terracustos.Enums.Role;
-import com.terracustosapi.terracustos.IRepositories.IRoleRepository;
-import com.terracustosapi.terracustos.Models.UserRoles;
+import com.terracustosapi.terracustos.enums.Role;
+import com.terracustosapi.terracustos.iRepositories.IRoleRepository;
+import com.terracustosapi.terracustos.interfaces.IRoleService;
+import com.terracustosapi.terracustos.models.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

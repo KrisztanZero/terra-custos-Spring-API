@@ -1,6 +1,5 @@
-package com.terracustosapi.terracustos.Models;
+package com.terracustosapi.terracustos.models;
 
-import com.terracustosapi.terracustos.Enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,15 +7,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
-@Document("userRoles")
+@Document("users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRoles {
+public class User {
     @Id
     private String userId;
-    private List<Role> roles;
+    private String username;
+    private String email;
+    private String password;
+    private String introduction;
 }

@@ -1,7 +1,7 @@
-package com.terracustosapi.terracustos.Services;
+package com.terracustosapi.terracustos.interfaces;
 
-import com.terracustosapi.terracustos.Enums.Role;
-import com.terracustosapi.terracustos.Models.UserRoles;
+import com.terracustosapi.terracustos.enums.Role;
+import com.terracustosapi.terracustos.models.UserRoles;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
-package com.terracustosapi.terracustos.Services;
+package com.terracustosapi.terracustos.services;
 
-import com.terracustosapi.terracustos.IRepositories.ISessionRepository;
-import com.terracustosapi.terracustos.Models.Session;
-import com.terracustosapi.terracustos.Models.User;
+import com.terracustosapi.terracustos.iRepositories.ISessionRepository;
+import com.terracustosapi.terracustos.interfaces.ISessionService;
+import com.terracustosapi.terracustos.models.Session;
+import com.terracustosapi.terracustos.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

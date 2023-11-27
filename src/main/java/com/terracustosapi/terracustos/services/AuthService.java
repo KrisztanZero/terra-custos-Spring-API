@@ -1,11 +1,15 @@
-package com.terracustosapi.terracustos.Services;
+package com.terracustosapi.terracustos.services;
 
-import com.terracustosapi.terracustos.Dtos.AuthorizationRequestDto;
-import com.terracustosapi.terracustos.Dtos.LoginResponse;
-import com.terracustosapi.terracustos.Dtos.UserDto;
-import com.terracustosapi.terracustos.Enums.Role;
-import com.terracustosapi.terracustos.Models.Session;
-import com.terracustosapi.terracustos.Models.User;
+import com.terracustosapi.terracustos.dtos.AuthorizationRequestDto;
+import com.terracustosapi.terracustos.dtos.LoginResponse;
+import com.terracustosapi.terracustos.dtos.UserDto;
+import com.terracustosapi.terracustos.enums.Role;
+import com.terracustosapi.terracustos.interfaces.IAuthService;
+import com.terracustosapi.terracustos.interfaces.IRoleService;
+import com.terracustosapi.terracustos.interfaces.ISessionService;
+import com.terracustosapi.terracustos.interfaces.IUserService;
+import com.terracustosapi.terracustos.models.Session;
+import com.terracustosapi.terracustos.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

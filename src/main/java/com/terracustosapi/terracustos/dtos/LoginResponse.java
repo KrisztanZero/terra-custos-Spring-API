@@ -1,6 +1,5 @@
-package com.terracustosapi.terracustos.Dtos;
+package com.terracustosapi.terracustos.dtos;
 
-import com.terracustosapi.terracustos.Models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
-package com.terracustosapi.terracustos.IRepositories;
+package com.terracustosapi.terracustos.iRepositories;
 
-import com.terracustosapi.terracustos.Models.User;
+import com.terracustosapi.terracustos.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

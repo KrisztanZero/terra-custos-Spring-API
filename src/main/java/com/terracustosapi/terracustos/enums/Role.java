@@ -1,4 +1,4 @@
-package com.terracustosapi.terracustos.Enums;
+package com.terracustosapi.terracustos.enums;
 
 public enum Role {
     ADMIN,
