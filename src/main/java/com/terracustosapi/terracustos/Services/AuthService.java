@@ -2,6 +2,7 @@ package com.terracustosapi.terracustos.Services;
 
 import com.terracustosapi.terracustos.Dtos.AuthorizationRequestDto;
 import com.terracustosapi.terracustos.Dtos.LoginResponse;
+import com.terracustosapi.terracustos.Dtos.LogoutResponse;
 import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Enums.Role;
 import com.terracustosapi.terracustos.Interfaces.IAuthService;
@@ -54,6 +55,29 @@ public class AuthService implements IAuthService {
         Session session = sessionService.generateSession(user);
 
         return new LoginResponse(new UserDto((user)), session.getSessionId());
+    }
+
+    @Override
+    public LogoutResponse logout(UserDto userDto) throws Exception {
+        try {
+            User user;
+            if (checkCredential(userDto.getEmail())) {
+                user = userService.getUserByEmail(userDto.getEmail());
+            } else if (checkCredential(userDto.getUsername())) {
+                user = userService.getUserByName(userDto.getUsername());
+            } else {
+                throw new Exception("Invalid username or email");
+            }
+
+            List<Session> sessions = sessionService.getSessionsByUser(user.getUserId());
+            if (sessions != null && !sessions.isEmpty()) {
+                sessionService.deleteSessions(sessions);
+            }
+
+            return new LogoutResponse(new UserDto(user), "Logout successful");
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
