@@ -90,6 +90,11 @@ public class AuthService implements IAuthService {
         return request.getRoles().stream().anyMatch(userRoles::contains);
     }
 
+    @Override
+    public boolean isUsernameOrEmailAlreadyRegistered(String username, String email) {
+        return userService.isUsernameOrEmailAlreadyRegistered(username, email);
+    }
+
     private boolean checkCredential(String credential) {
         return (credential != null && !credential.isEmpty());
     }

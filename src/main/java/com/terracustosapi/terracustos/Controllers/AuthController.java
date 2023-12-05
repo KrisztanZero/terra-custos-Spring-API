@@ -6,10 +6,14 @@ import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Models.User;
 import com.terracustosapi.terracustos.Services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,10 +40,20 @@ public class AuthController {
     @PostMapping("/logout")
     public LogoutResponse logout(@RequestBody UserDto userDto) {
         try {
-            authService.logout(userDto); // Implement the logout logic in the AuthService
+            authService.logout(userDto);
             return new LogoutResponse(userDto, "Logout successful");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/check-username-email")
+    public ResponseEntity<String> checkUsernameOrEmail(@RequestParam String username, @RequestParam String email) {
+        boolean isAlreadyRegistered = authService.isUsernameOrEmailAlreadyRegistered(username, email);
+        if (isAlreadyRegistered) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username or email already registered");
+        } else {
+            return ResponseEntity.ok("Username and email are available");
         }
     }
 }

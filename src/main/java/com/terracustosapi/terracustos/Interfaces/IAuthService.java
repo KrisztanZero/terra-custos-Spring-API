@@ -13,4 +13,5 @@ public interface IAuthService {
     LogoutResponse logout(UserDto userDto) throws Exception;
 
     boolean isAuthorized(AuthorizationRequestDto request) throws Exception;
+    boolean isUsernameOrEmailAlreadyRegistered(String username, String email);
 }

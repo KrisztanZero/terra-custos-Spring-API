@@ -11,4 +11,5 @@ public interface IUserService {
     User save(User authUser);
     UserRoles getUserRoles(String sessionId);
     User updateIntroduction(String sessionId, String newIntroduction);
+    boolean isUsernameOrEmailAlreadyRegistered(String username, String email);
 }

@@ -57,4 +57,11 @@ public class UserService implements IUserService {
             user.setIntroduction(introduction);
             return userRepository.save(user);
     }
+
+    @Override
+    public boolean isUsernameOrEmailAlreadyRegistered(String username, String email) {
+        boolean usernameExists = userRepository.findByUsername(username).isPresent();
+        boolean emailExists = userRepository.findByEmail(email).isPresent();
+        return usernameExists || emailExists;
+    }
 }
