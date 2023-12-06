@@ -1,5 +1,6 @@
 package com.terracustosapi.terracustos.Services;
 
+import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.IRepositories.IUserRepository;
 import com.terracustosapi.terracustos.Interfaces.IRoleService;
 import com.terracustosapi.terracustos.Interfaces.ISessionService;
@@ -56,6 +57,17 @@ public class UserService implements IUserService {
         User user = getUserBySession(sessionId);
             user.setIntroduction(introduction);
             return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(String sessionId, UserDto updatedUserDto){
+        User user = getUserBySession(sessionId);
+
+        user.setUsername(updatedUserDto.getUsername());
+        user.setEmail(updatedUserDto.getEmail());
+        user.setIntroduction(updatedUserDto.getIntroduction());
+
+        return userRepository.save(user);
     }
 
     @Override
