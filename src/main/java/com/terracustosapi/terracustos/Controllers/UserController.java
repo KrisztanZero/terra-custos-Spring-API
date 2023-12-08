@@ -4,6 +4,7 @@ import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Dtos.UserRolesDto;
 import com.terracustosapi.terracustos.Interfaces.IUserService;
 import com.terracustosapi.terracustos.Models.User;
+import com.terracustosapi.terracustos.utils.TokenExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class UserController {
     private IUserService userService;
     @GetMapping("/get-by-session")
     public UserDto getBySession(@RequestHeader("Authorization") String authorizationHeader){
-        String sessionId = extractSessionId(authorizationHeader);
+        String sessionId = TokenExtractor.extractSessionId(authorizationHeader);
         return new UserDto(userService.getUserBySession(sessionId));
     }
 
@@ -33,14 +34,14 @@ public class UserController {
 
     @GetMapping("/get-user-roles")
     public UserRolesDto getRoles(@RequestHeader("Authorization") String authorizationHeader) {
-        String sessionId = extractSessionId(authorizationHeader);
+        String sessionId = TokenExtractor.extractSessionId(authorizationHeader);
         return new UserRolesDto(userService.getUserRoles(sessionId));
     }
 
     @PutMapping("/update-introduction")
     public UserDto updateIntroduction(@RequestHeader("Authorization") String authorizationHeader,
                                       @RequestBody String introduction) {
-        String sessionId = extractSessionId(authorizationHeader);
+        String sessionId = TokenExtractor.extractSessionId(authorizationHeader);
         User updatedUser = userService.updateIntroduction(sessionId, introduction);
         return new UserDto(updatedUser);
     }
@@ -48,18 +49,9 @@ public class UserController {
     @PutMapping("/update-user")
     public UserDto updateUser(@RequestHeader("Authorization") String authorizationHeader,
                               @RequestBody UserDto updatedUserDto) {
-            String sessionId = extractSessionId(authorizationHeader);
+            String sessionId = TokenExtractor.extractSessionId(authorizationHeader);
 
             User updatedUser = userService.updateUser(sessionId, updatedUserDto);
             return new UserDto(updatedUser);
-    }
-
-    private String extractSessionId(String authorizationHeader) {
-        String[] headerParts = authorizationHeader.split(" ");
-        if (headerParts.length == 2) {
-            return headerParts[1];
-        } else {
-            throw new IllegalArgumentException("Invalid Authorization header format");
-        }
     }
 }

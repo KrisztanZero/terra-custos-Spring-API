@@ -58,16 +58,9 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public LogoutResponse logout(UserDto userDto) throws Exception {
+    public LogoutResponse logout(String sessionId) throws Exception{
         try {
-            User user;
-            if (checkCredential(userDto.getEmail())) {
-                user = userService.getUserByEmail(userDto.getEmail());
-            } else if (checkCredential(userDto.getUsername())) {
-                user = userService.getUserByName(userDto.getUsername());
-            } else {
-                throw new Exception("Invalid username or email");
-            }
+            User user = userService.getUserBySession(sessionId);
 
             List<Session> sessions = sessionService.getSessionsByUser(user.getUserId());
             if (sessions != null && !sessions.isEmpty()) {

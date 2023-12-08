@@ -5,6 +5,7 @@ import com.terracustosapi.terracustos.Dtos.LogoutResponse;
 import com.terracustosapi.terracustos.Dtos.UserDto;
 import com.terracustosapi.terracustos.Models.User;
 import com.terracustosapi.terracustos.Services.AuthService;
+import com.terracustosapi.terracustos.utils.TokenExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,10 +40,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public LogoutResponse logout(@RequestBody UserDto userDto) {
+    public LogoutResponse logout(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            authService.logout(userDto);
-            return new LogoutResponse(userDto, "Logout successful");
+            String sessionId = TokenExtractor.extractSessionId(authorizationHeader);
+            return authService.logout(sessionId);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

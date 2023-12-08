@@ -10,7 +10,7 @@ public interface IAuthService {
     User register(UserDto userDto);
 
     LoginResponse login(UserDto userDto) throws Exception;
-    LogoutResponse logout(UserDto userDto) throws Exception;
+    LogoutResponse logout(String sessionId) throws Exception;
 
     boolean isAuthorized(AuthorizationRequestDto request) throws Exception;
     boolean isUsernameOrEmailAlreadyRegistered(String username, String email);
